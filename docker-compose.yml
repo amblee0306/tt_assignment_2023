@@ -9,6 +9,8 @@ services:
       - SERVICE_TAGS=rpc
     depends_on:
       - etcd
+      - rediscache
+    # scale: 2
   http-server:
     build: http-server
     ports:
@@ -24,3 +26,16 @@ services:
     command: ["etcd", "--advertise-client-urls", "http://etcd:2379", "--listen-client-urls", "http://0.0.0.0:2379"]
     ports:
       - "2379:2379"
+
+  rediscache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass Atyeyt8H91NQVR1fdwPw20xZHOLF
+    volumes: 
+      - cache:/data
+      
+volumes:
+  cache:
+    driver: local
