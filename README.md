@@ -31,12 +31,12 @@ To send a message to a chat.
 - Response: Nil (unless error)
 
 
-| Param        | Type           | Description  |
+| Param         | Type           | Description  |
 | ------------- |:-------------:| -----:|
-| chat      | string | Name of chatroom. |
-| text      | string      |   A text message being sent. |
-| sender | string      |    Sender name. |
-| sendtime | int64 | Timestamp (auto-added when send API is called).|
+| chat          | string      | Name of chatroom. |
+| text          | string      |   A text message being sent. |
+| sender        | string      |    Sender name. |
+| sendtime      | int64       | Timestamp (auto-added when send API is called).|
 
 Example curl command:
 
@@ -55,12 +55,12 @@ To get messages in a chatroom.
 
 - GET /api/pull
 
-| Param        | Type           | Description  |
-| ------------- |:-------------:| -----:|
-| chat      | string | Name of chatroom. |
-| cursor      | int64      |   Starting point (timestamp) of messages to retrieve, 0 by default (if not indicated). |
-| limit | int32      |    The number of messages to return. |
-| reverse | bool | To reverse the order of messages returned. If true, the messages will be ordered from oldest to newest.|
+| Param         | Type           | Description  |
+| ------------- |:-------------: | -----:|
+| chat          | string         | Name of chatroom. |
+| cursor        | int64       |   Starting point (timestamp) of messages to retrieve, 0 by default (if not indicated). |
+| limit         | int32       |    The number of messages to return. |
+| reverse       | bool        | To reverse the order of messages returned. If true, the messages will be ordered from oldest to newest.|
 
 Example curl command:
 
@@ -79,11 +79,11 @@ curl --request GET \
 
 - Response:
 
-| Field        | Type           | Description  |
+| Field         | Type           | Description  |
 | ------------- |:-------------:| -----:|
-| messages      | array | A sorted array of messages. |
-| has_more      | bool      | If true, indicates there may be more messages in the chatroom that has not been fetch. |
-| next_cursor | int64      |    Starting position of next page if want to fetch more messages. |
+| messages      | array      | A sorted array of messages. |
+| has_more      | bool       | If true, indicates there may be more messages in the chatroom that has not been fetch. |
+| next_cursor   | int64      |    Starting position of next page if want to fetch more messages. |
 
 
 ```json
