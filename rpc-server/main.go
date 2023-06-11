@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/TikTokTechImmersion/assignment_demo_2023/rpc-server/datastorage"
 	rpc "github.com/TikTokTechImmersion/assignment_demo_2023/rpc-server/kitex_gen/rpc/imservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
@@ -30,9 +31,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	imServiceImplInstance := &IMServiceImpl{
-		redisClient: redisClient,
-	}
+	imServiceImplInstance := NewIMServiceImpl(datastorage.NewRedisDA(redisClient))
+
 	svr := rpc.NewServer(imServiceImplInstance, server.WithRegistry(r), server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 		ServiceName: "demo.rpc.server",
 	}))
