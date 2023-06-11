@@ -21,6 +21,7 @@ func main() {
 	})
 	_, err := redisClient.Ping().Result()
 	if err != nil {
+		log.Println("Redis init fail, ", err)
 		log.Fatal(err)
 	}
 
