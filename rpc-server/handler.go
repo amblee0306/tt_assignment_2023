@@ -42,6 +42,8 @@ func (s *IMServiceImpl) Pull(ctx context.Context, req *rpc.PullRequest) (*rpc.Pu
 	limit := req.GetLimit()
 	if limit > 100 {
 		limit = 100
+	} else if limit <= 0 {
+		limit = 10
 	}
 
 	dbvalJsons, nextCursor, err := s.db.GetChat(ctx, req.GetChat(), req.GetCursor(), limit, req.GetReverse())

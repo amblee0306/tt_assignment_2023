@@ -59,7 +59,7 @@ To get messages in a chatroom.
 | ------------- |:-------------: | -----:|
 | chat          | string         | Name of chatroom. |
 | cursor        | int64       |   Starting point (timestamp) of messages to retrieve, 0 by default (if not indicated). |
-| limit         | int32       |    The number of messages to return. |
+| limit         | int32       |    The number of messages to return, default 10. |
 | reverse       | bool        | To reverse the order of messages returned. If true, the messages will be ordered from oldest to newest.|
 
 Example curl command:
