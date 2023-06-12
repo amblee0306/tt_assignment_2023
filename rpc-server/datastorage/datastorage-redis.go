@@ -34,26 +34,33 @@ func (s *redisDA) GetChat(ctx context.Context, chat string, cursor int64, limit 
 	var zResults []redis.Z
 	var err error
 	if isAsc {
-		zResults, err = s.getRedisZRangeByScoreWithScores(chat, cursor, limit)
+		zResults, err = s.getRedisZRangeByScoreWithScores(chat, cursor, limit+1)
 	} else {
-		zResults, err = s.getRedisZRevRangeByScoreWithScores(chat, cursor, limit)
+		zResults, err = s.getRedisZRevRangeByScoreWithScores(chat, cursor, limit+1)
 	}
-	var lastCursor int64
+	var nextCursor int64
 	if len(zResults) > 0 {
-		lastCursor = int64(zResults[len(zResults)-1].Score)
+		if len(zResults) > int(limit) {
+			nextCursor = int64(zResults[len(zResults)-2].Score)
+		} else {
+			nextCursor = 0
+		}
 	} else {
-		lastCursor = 0
+		nextCursor = 0
 	}
 
 	results := make([]string, 0, len(zResults))
-	for _, r := range zResults {
+	for idx, r := range zResults {
+		if nextCursor != 0 && idx == len(zResults)-1 {
+			// if there is extra element in the result array then remove it.
+			break
+		}
 		// log.Printf("score %v, member %v\n", r.Score, r.Member)
 		// log.Printf("type %T", r.Member)
 		results = append(results, fmt.Sprintf("%v", r.Member))
 	}
-	// log.Println("lastCursor", lastCursor)
 
-	return results, lastCursor, err
+	return results, nextCursor, err
 }
 
 func (s *redisDA) getRedisZRangeByScoreWithScores(chat string, cursor int64, limit int32) ([]redis.Z, error) {
