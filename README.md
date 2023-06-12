@@ -82,8 +82,8 @@ curl --request GET \
 | Field         | Type           | Description  |
 | ------------- |:-------------:| -----:|
 | messages      | array      | A sorted array of messages. |
-| has_more      | bool       | If true, indicates there may be more messages in the chatroom that has not been fetch. |
-| next_cursor   | int64      |    Starting position of next page if want to fetch more messages. |
+| has_more      | bool       | If true, indicates there are more messages in the chatroom that has not been fetch. |
+| next_cursor   | int64      |    Starting position (timestamp) of next page if want to fetch more messages. If no more messages, next_cursor will be set to zero. |
 
 
 ```json
